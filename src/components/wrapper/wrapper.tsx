@@ -1,20 +1,22 @@
 import {Button, Image, Layout, Row} from "antd";
 import SideMenu from "../sideMenu/sideMenu";
 import React from "react";
-import {Navigate, Outlet} from "react-router-dom";
+import {Outlet, useNavigate} from "react-router-dom";
 import logo from '../../assets/logo.svg'
 
 const Wrapper: React.FC<{token: string | null}> = ({token}) => {
 
+  const navigate = useNavigate();
+
   if(!token) {
-    return <Navigate to={'/login'} replace />
+    navigate('/login', {replace: true})
   }
 
   const { Header, Content } = Layout;
 
   const logout = () => {
     localStorage.removeItem('token');
-    window.location.href = '/login';
+    navigate('/login', {replace: true})
   }
 
   return (

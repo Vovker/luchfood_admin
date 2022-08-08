@@ -2,15 +2,25 @@ import {Button, Form, Input} from "antd";
 import {PageTitle} from "../../common/pageTitle/pageTitle";
 import {ContentWrapper} from "../../common/contentWrapper/contentWrapper";
 import {DragAndDrop} from "../../common/dragAndDrop/dragAndDrop";
+import {CreateNewsTyped} from "../../../store/types/news.types";
+import {getBase64} from "../../../utils/getBase64";
+import {useAppDispatch} from "../../../hooks/useAppDispatch";
+import {createNews} from "../../../store/actions/news.action";
 
 export const AddNews = () => {
 
-  const onFinish = (values: any) => {
+  const dispatch = useAppDispatch();
 
-  }
+  const onFinish = async (values: any) => {
+    const img = await getBase64(values.img.file).then(x => x);
+    const data: CreateNewsTyped = {
+      title: values.title,
+      description: values.description,
+      body: values.body,
+      img
+    }
 
-  const onFinishFailed = (values: any) => {
-
+    dispatch(createNews(data))
   }
 
   return (
@@ -26,7 +36,6 @@ export const AddNews = () => {
           span: 14,
         }}
         onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
       >
         <Form.Item
           label={'Заголовок'}

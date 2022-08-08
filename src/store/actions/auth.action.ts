@@ -1,10 +1,12 @@
 import {toast} from "react-toastify";
-import {post} from "../../helpers/apiProxy";
-import {endpoints} from "../endpoints";
+import AuthService from "../services/auth.service";
 
 export const auth = (username: string, password: string) => {
+
+  const service = new AuthService();
+
   const notification = toast.loading("Попытка входа...", {autoClose: 2000});
-  post(endpoints.auth, {username, password}).then(
+  service.auth(username, password).then(
     (response) => {
       toast.update(notification, {render: "Добро пожаловать!", type: "success", isLoading: false, autoClose: 2000});
       localStorage.setItem('token', response.data);

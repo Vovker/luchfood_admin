@@ -8,6 +8,9 @@ import Login from "./components/login/login";
 import Wrapper from "./components/wrapper/wrapper";
 import {ToastContainer} from "react-toastify";
 import {AddNews} from "./components/news/addNews/addNews";
+import {NewsList} from "./components/news/newsList/newsList";
+import {EditNews} from "./components/news/editNews/editNews";
+import 'moment/locale/ru';
 
 function App() {
 
@@ -25,6 +28,8 @@ function App() {
           <Route path={'/login'} element={<Login/>}/>
           <Route path={'/'} element={<Wrapper token={token}/>}>
             <Route path={'/news/add'} element={<AddNews/>}/>
+            <Route path={'/news'} element={<NewsList/>}/>
+            <Route path={'/news/:id'} element={<EditNews/>}/>
           </Route>
         </Routes>
       </BrowserRouter>
