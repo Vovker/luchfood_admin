@@ -11,6 +11,9 @@ import {AddNews} from "./components/news/addNews/addNews";
 import {NewsList} from "./components/news/newsList/newsList";
 import {EditNews} from "./components/news/editNews/editNews";
 import 'moment/locale/ru';
+import {GalleryList} from "./components/gallery/galleryList/galleryList";
+import {EditGallery} from "./components/gallery/editGallery/editGallery";
+import {AddGallery} from "./components/gallery/addGallery/addGallery";
 
 function App() {
 
@@ -30,6 +33,9 @@ function App() {
             <Route path={'/news/add'} element={<AddNews/>}/>
             <Route path={'/news'} element={<NewsList/>}/>
             <Route path={'/news/:id'} element={<EditNews/>}/>
+            <Route path={'/gallery/add'} element={<AddGallery/>}/>
+            <Route path={'/gallery'} element={<GalleryList/>}/>
+            <Route path={'/gallery/:id'} element={<EditGallery/>}/>
           </Route>
         </Routes>
       </BrowserRouter>
