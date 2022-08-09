@@ -14,6 +14,10 @@ import 'moment/locale/ru';
 import {GalleryList} from "./components/gallery/galleryList/galleryList";
 import {EditGallery} from "./components/gallery/editGallery/editGallery";
 import {AddGallery} from "./components/gallery/addGallery/addGallery";
+import {EventTypes} from "./components/events/eventTypes/eventTypes";
+import {AddEvent} from "./components/events/addEvent/addEvent";
+import {EventsList} from "./components/events/eventsList/eventsList";
+import {EditEvent} from "./components/events/editEvent/editEvent";
 
 function App() {
 
@@ -36,6 +40,10 @@ function App() {
             <Route path={'/gallery/add'} element={<AddGallery/>}/>
             <Route path={'/gallery'} element={<GalleryList/>}/>
             <Route path={'/gallery/:id'} element={<EditGallery/>}/>
+            <Route path={'/events/types'} element={<EventTypes/>}/>
+            <Route path={'/events/add'} element={<AddEvent/>}/>
+            <Route path={'/events'} element={<EventsList/>}/>
+            <Route path={'/events/:id'} element={<EditEvent/>}/>
           </Route>
         </Routes>
       </BrowserRouter>

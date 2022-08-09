@@ -43,6 +43,10 @@ const SideMenu = () => {
               {
                 key: 32,
                 label: <Link to={"/events/add"}>Добавить событие</Link>
+              },
+              {
+                key: 33,
+                label: <Link to={"/events/types"}>Виды событий</Link>
               }
             ]
           },

@@ -1,32 +1,32 @@
 import {ContentWrapper} from "../../common/contentWrapper/contentWrapper";
 import {PageTitle} from "../../common/pageTitle/pageTitle";
 import {useAppDispatch} from "../../../hooks/useAppDispatch";
-import {useLayoutEffect, useState} from "react";
-import {deleteNews, getNews} from "../../../store/actions/news.action";
-import {Image, Table, Row, Col, Popconfirm, Button} from 'antd';
-import {NewsTyped} from "../../../store/types/news.types";
+import {useLayoutEffect} from "react";
+import {deleteEvent, getEvents} from "../../../store/actions/events.action";
+import {getEventTypes} from "../../../store/actions/eventTypes.action";
 import {useAppSelector} from "../../../hooks/useAppSelector";
-import {Loader} from "../../common/loader/loader";
-import {useNavigate} from "react-router-dom";
 import moment from "moment";
+import {Button, Col, Image, Popconfirm, Row, Table} from "antd";
+import {useNavigate} from "react-router-dom";
+import {Loader} from "../../common/loader/loader";
+import {EventsTypes} from "../../../store/types/events.types";
 
-export const NewsList = () => {
+export const EventsList = () => {
 
   const dispatch = useAppDispatch();
+
   const navigate = useNavigate();
 
-  const [page, setPage] = useState(0);
-
   useLayoutEffect(() => {
-    dispatch(getNews(100, page));
-    setPage(prevState => prevState++);
-  }, [dispatch]);
+    dispatch(getEvents(100, 0));
+    dispatch(getEventTypes());
+  }, [dispatch])
+
+  const {events, isLoading} = useAppSelector(state => state.events);
 
   const handleDelete = (id: number) => {
-    dispatch(deleteNews(id));
+    dispatch(deleteEvent(id));
   }
-
-  const {news, isLoading} = useAppSelector(state => state.news);
 
   const columns = [
     {
@@ -37,15 +37,21 @@ export const NewsList = () => {
     },
     {
       title: 'Заголовок',
-      dataIndex: 'title',
+      dataIndex: 'name',
       key: 'title'
     },
     {
-      title: 'Дата создания',
-      dataIndex: 'created_at',
-      key: 'created_at',
-      width: '10%',
-      render: (record: any) => moment(record).locale('ru').format('DD MMMM YYYY')
+      title: 'Категория',
+      dataIndex: 'type',
+      key: 'type',
+      render: (_: any, record: any) => record.type.name
+    },
+    {
+      title: 'Дата проведения',
+      dataIndex: 'date',
+      key: 'date',
+      width: '250px',
+      render: (record: any) => moment(record).locale('ru').format('LLL')
     },
     {
       title: 'Действие',
@@ -55,14 +61,14 @@ export const NewsList = () => {
       render: (record: any) => (
         <Row justify={'space-between'}>
           <Popconfirm
-            title={'Удалить новость?'}
+            title={'Удалить событие?'}
             onConfirm={() => handleDelete(record.key)}
           >
             <Button type="primary" danger ghost>
               Удалить
             </Button>
           </Popconfirm>
-          <Button type="primary" ghost onClick={() => navigate(`/news/${record.key}`, {replace: true})}>
+          <Button type="primary" ghost onClick={() => navigate(`/events/${record.key}`, {replace: true})}>
             Редактировать
           </Button>
         </Row>
@@ -70,15 +76,15 @@ export const NewsList = () => {
     }
   ]
 
-  return (
+  return(
     <ContentWrapper>
-      <PageTitle>Все новости</PageTitle>
+      <PageTitle>Все события</PageTitle>
       {
         !isLoading ?
           <Table
             columns={columns}
             dataSource={
-              news.map(item => {
+              events.map(item => {
                 return {
                   ...item,
                   key: item.id,
@@ -86,17 +92,16 @@ export const NewsList = () => {
               })
             }
             expandable={{
-              expandedRowRender: (news: NewsTyped) => (
+              expandedRowRender: (event: EventsTypes) => (
                 <Row style={{gap: '20px'}}>
                   <Col>
                     <Image
                       width={300}
-                      src={`${process.env.REACT_APP_API_URL}/${news.img}`}
+                      src={`${process.env.REACT_APP_API_URL}/${event.img}`}
                     />
                   </Col>
                   <Col>
-                    <p>{news.description}</p>
-                    <p>{news.body}</p>
+                    <p>{event.description}</p>
                   </Col>
                 </Row>
               )
