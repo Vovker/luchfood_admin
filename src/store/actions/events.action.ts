@@ -68,6 +68,7 @@ export function createEvent(event: CreateEventsTyped): (dispatch: Dispatch) => v
       if (data) {
         dispatch({type: CREATE_EVENTS_SUCCESS, payload: [data]});
         toast("Событие успешно создано", {type: "success"});
+        window.location.href = `/events/${data.id}`;
       }
     }).catch(error => {
       dispatch({type: CREATE_EVENTS_FAILURE, payload: error});

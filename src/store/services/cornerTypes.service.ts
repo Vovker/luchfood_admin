@@ -1,5 +1,5 @@
 import {del, get, post, put} from "../../helpers/apiProxy";
-import {CreateCornerTyped} from "../types/cornerType.types";
+import {CreateCornerTypeTyped} from "../types/cornerType.types";
 
 class CornerTypesService {
   public getCornerTypes() {
@@ -10,11 +10,11 @@ class CornerTypesService {
     return del(`/kitchen-type/${id}`);
   }
 
-  public createCornerType(cornerType: CreateCornerTyped) {
+  public createCornerType(cornerType: CreateCornerTypeTyped) {
     return post('/kitchen-type', cornerType);
   }
 
-  public updateCornerType(id: number, cornerType: CreateCornerTyped) {
+  public updateCornerType(id: number, cornerType: CreateCornerTypeTyped) {
     return put(`/kitchen-type/${id}`, cornerType);
   }
 }

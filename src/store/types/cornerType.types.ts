@@ -26,17 +26,17 @@ export {
   DELETE_CORNER_TYPE_FAILURE,
 }
 
-export type CreateCornerTyped = {
+export type CreateCornerTypeTyped = {
   name: string;
 }
 
-export type CornerTyped = {
+export type CornerTypeTyped = {
   id: number;
   name: string;
 }
 
-export type CornerTypesState = {
-  cornerTypes: CornerTyped[];
+export type CornerTypeTypesState = {
+  cornerTypes: CornerTypeTyped[];
   isLoading: boolean;
   error: any;
 }

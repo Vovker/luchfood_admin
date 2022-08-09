@@ -4,7 +4,7 @@ import {
   CREATE_CORNER_TYPE_FAILURE,
   CREATE_CORNER_TYPE_REQUEST,
   CREATE_CORNER_TYPE_SUCCESS,
-  CreateCornerTyped,
+  CreateCornerTypeTyped,
   DELETE_CORNER_TYPE_FAILURE,
   DELETE_CORNER_TYPE_REQUEST,
   DELETE_CORNER_TYPE_SUCCESS,
@@ -33,7 +33,7 @@ export function getCornerTypes(): (dispatch: Dispatch) => void {
   }
 }
 
-export function createCornerType(cornerType: CreateCornerTyped): (dispatch: Dispatch) => void {
+export function createCornerType(cornerType: CreateCornerTypeTyped): (dispatch: Dispatch) => void {
   return (dispatch) => {
     dispatch({type: CREATE_CORNER_TYPE_REQUEST});
     cornerTypesService.createCornerType(cornerType).then(response => {
@@ -48,7 +48,7 @@ export function createCornerType(cornerType: CreateCornerTyped): (dispatch: Disp
   }
 }
 
-export function updateCornerType(id: number, cornerType: CreateCornerTyped): (dispatch: Dispatch) => void {
+export function updateCornerType(id: number, cornerType: CreateCornerTypeTyped): (dispatch: Dispatch) => void {
   return (dispatch) => {
     dispatch({type: UPDATE_CORNER_TYPE_REQUEST});
     cornerTypesService.updateCornerType(id, cornerType).then(response => {

@@ -1,18 +1,25 @@
 import {
-  CornerTyped,
-  CornerTypesState, CREATE_CORNER_TYPE_REQUEST, CREATE_CORNER_TYPE_SUCCESS,
-  DELETE_CORNER_TYPE_REQUEST, DELETE_CORNER_TYPE_SUCCESS, GET_CORNER_TYPE_FAILURE,
-  GET_CORNER_TYPE_REQUEST, GET_CORNER_TYPE_SUCCESS, UPDATE_CORNER_TYPE_REQUEST, UPDATE_CORNER_TYPE_SUCCESS
+  CornerTypeTyped,
+  CornerTypeTypesState,
+  CREATE_CORNER_TYPE_REQUEST,
+  CREATE_CORNER_TYPE_SUCCESS,
+  DELETE_CORNER_TYPE_REQUEST,
+  DELETE_CORNER_TYPE_SUCCESS,
+  GET_CORNER_TYPE_FAILURE,
+  GET_CORNER_TYPE_REQUEST,
+  GET_CORNER_TYPE_SUCCESS,
+  UPDATE_CORNER_TYPE_REQUEST,
+  UPDATE_CORNER_TYPE_SUCCESS
 } from "../types/cornerType.types";
 import {ActionWithPayload} from "../types/index.types";
 
-const initialState: CornerTypesState = {
+const initialState: CornerTypeTypesState = {
   cornerTypes: [],
   isLoading: false,
   error: null,
 }
 
-export const cornerTypesReducer = (state = initialState, action: ActionWithPayload<CornerTyped[]>): CornerTypesState => {
+export const cornerTypesReducer = (state = initialState, action: ActionWithPayload<CornerTypeTyped[]>): CornerTypeTypesState => {
   switch (action.type) {
     case GET_CORNER_TYPE_REQUEST || DELETE_CORNER_TYPE_REQUEST || CREATE_CORNER_TYPE_REQUEST || UPDATE_CORNER_TYPE_REQUEST:
       return {

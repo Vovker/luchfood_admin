@@ -35,6 +35,14 @@ const SideMenu = () => {
                 key: 21,
                 label: <Link to={"/corners/types"}>Категории кухни</Link>
               },
+              {
+                key: 22,
+                label: <Link to={"/corners"}>Корнеры</Link>
+              },
+              {
+                key: 23,
+                label: <Link to={"/corners/add"}>Добавить корнера</Link>
+              },
             ]
           },
           {
