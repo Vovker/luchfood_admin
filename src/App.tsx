@@ -18,6 +18,7 @@ import {EventTypes} from "./components/events/eventTypes/eventTypes";
 import {AddEvent} from "./components/events/addEvent/addEvent";
 import {EventsList} from "./components/events/eventsList/eventsList";
 import {EditEvent} from "./components/events/editEvent/editEvent";
+import {CornerTypes} from "./components/corners/cornerTypes/cornerTypes";
 
 function App() {
 
@@ -44,6 +45,7 @@ function App() {
             <Route path={'/events/add'} element={<AddEvent/>}/>
             <Route path={'/events'} element={<EventsList/>}/>
             <Route path={'/events/:id'} element={<EditEvent/>}/>
+            <Route path={'/corners/types'} element={<CornerTypes/>}/>
           </Route>
         </Routes>
       </BrowserRouter>

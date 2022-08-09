@@ -30,6 +30,12 @@ const SideMenu = () => {
             key: 2,
             icon: <ShopOutlined />,
             label: "Корнеры",
+            children: [
+              {
+                key: 21,
+                label: <Link to={"/corners/types"}>Категории кухни</Link>
+              },
+            ]
           },
           {
             key: 3,
@@ -46,7 +52,7 @@ const SideMenu = () => {
               },
               {
                 key: 33,
-                label: <Link to={"/events/types"}>Виды событий</Link>
+                label: <Link to={"/events/types"}>Категории событий</Link>
               }
             ]
           },
