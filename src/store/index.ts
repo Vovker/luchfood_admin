@@ -5,6 +5,7 @@ import {eventTypesReducer} from "./reducers/eventTypes.reducer";
 import {eventByIdReducer, eventsReducer} from "./reducers/events.reducer";
 import {cornerTypesReducer} from "./reducers/cornerTypes.reducer";
 import {cornerByIdReducer, cornerReducer} from "./reducers/corner.reducer";
+import {menuCategoryReducer} from "./reducers/menuCategory.reducer";
 
 const rootReducer = combineReducers({
   news: newsReducer,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   cornerTypes: cornerTypesReducer,
   corners: cornerReducer,
   cornersById: cornerByIdReducer,
+  menuCategories: menuCategoryReducer,
 });
 
 export const store = configureStore({
