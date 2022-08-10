@@ -1,36 +1,40 @@
-import {ContentWrapper} from "../../common/contentWrapper/contentWrapper";
-import {PageTitle} from "../../common/pageTitle/pageTitle";
-import {useAppDispatch} from "../../../hooks/useAppDispatch";
+import {useAppDispatch} from "../../../../hooks/useAppDispatch";
 import React, {useLayoutEffect, useState} from "react";
-import {
-  createCornerType,
-  deleteCornerType,
-  getCornerTypes,
-  updateCornerType
-} from "../../../store/actions/cornerTypes.action";
-import {useAppSelector} from "../../../hooks/useAppSelector";
+import {PageTitle} from "../../../common/pageTitle/pageTitle";
+import {createMenu, deleteMenu, getMenus, updateMenu} from "../../../../store/actions/menu.action";
+import {useAppSelector} from "../../../../hooks/useAppSelector";
 import {Button, Form, Input, Popconfirm, Row, Table} from "antd";
-import {Loader} from "../../common/loader/loader";
-import {EditableCornerTypes} from "./cornerTypes.types";
+import {EditableMenuCategoryTypes} from "../menuCategories/menuCategories.types";
+import {Loader} from "../../../common/loader/loader";
+import {SelectInput} from "../../../common/select/select";
+import {CreateMenuTyped} from "../../../../store/types/menu.types";
+import {MenuCategoryTyped} from "../../../../store/types/menuCategory.types";
 
-export const CornerTypes = () => {
-
+export const Menu: React.FC<{ id: number }> = ({id}) => {
   const dispatch = useAppDispatch();
 
   useLayoutEffect(() => {
-    dispatch(getCornerTypes());
-  }, [dispatch]);
+    dispatch(getMenus(id))
+  }, [dispatch, id]);
 
-  const {cornerTypes, isLoading} = useAppSelector(state => state.cornerTypes);
+  const {menu, isLoading} = useAppSelector(state => state.menu);
+  const {menuCategories} = useAppSelector(state => state.menuCategories);
 
   const onFinish = (values: any) => {
-    dispatch(createCornerType({name: values.name}))
+    const data: CreateMenuTyped = {
+      name: values.name,
+      price: values.price,
+      weight: values.weight,
+      menuCategoryId: values.menuCategoryId
+    }
+
+    dispatch(createMenu(data))
   }
 
   const [editingKey, setEditingKey] = useState('');
 
   const handleDelete = (id: number) => {
-    dispatch(deleteCornerType(id));
+    dispatch(deleteMenu(id));
   }
 
   const [form] = Form.useForm();
@@ -41,6 +45,9 @@ export const CornerTypes = () => {
     form.setFieldsValue({
       id: '',
       name: record.name,
+      weight: record.weight,
+      price: record.price,
+
       ...record,
     });
     setEditingKey(record.key);
@@ -49,22 +56,22 @@ export const CornerTypes = () => {
   const save = async (key: number) => {
     try {
       const row = await form.validateFields();
-      dispatch(updateCornerType(key, row));
+      dispatch(updateMenu(key, row));
       setEditingKey('');
     } catch (errInfo) {
       console.log('Validate Failed:', errInfo);
     }
   };
 
-  const EditableCell: React.FC<EditableCornerTypes> = ({
-    editing,
-    dataIndex,
-    title,
-    record,
-    index,
-    children,
-    ...restProps
-  }) => {
+  const EditableCell: React.FC<EditableMenuCategoryTypes> = ({
+       editing,
+       dataIndex,
+       title,
+       record,
+       index,
+       children,
+       ...restProps
+     }) => {
     const inputNode = <Input/>;
     return (
       <td {...restProps}>
@@ -98,10 +105,29 @@ export const CornerTypes = () => {
       editable: false
     },
     {
-      title: 'Значение',
+      title: 'Позиция',
       dataIndex: 'name',
       width: '100px',
       editable: true
+    },
+    {
+      title: 'Вес',
+      dataIndex: 'weight',
+      width: '100px',
+      editable: true
+    },
+    {
+      title: 'Цена (BYN)',
+      dataIndex: 'price',
+      width: '100px',
+      editable: true
+    },
+    {
+      title: 'Категория',
+      dataIndex: 'menuCategory',
+      width: '100px',
+      editable: false,
+      render: (record: MenuCategoryTyped) => record.name
     },
     {
       title: 'Действие',
@@ -131,7 +157,7 @@ export const CornerTypes = () => {
               Редактировать
             </Button>
             <Popconfirm
-              title={'Удалить категорию?'}
+              title={'Удалить продукт?'}
               onConfirm={() => handleDelete(record.id)}
             >
               <Button type="primary" danger ghost>
@@ -162,9 +188,9 @@ export const CornerTypes = () => {
     };
   });
 
-  return(
-    <ContentWrapper>
-      <PageTitle>Категории кухни</PageTitle>
+  return (
+    <>
+      <PageTitle>Меню</PageTitle>
       <Form
         style={{display: 'flex', gap: '40px', alignItems: 'flex-end'}}
         size={'large'}
@@ -173,7 +199,7 @@ export const CornerTypes = () => {
       >
         <Form.Item
           style={{width: '300px'}}
-          label={'Категория'}
+          label={'Наименование'}
           name={'name'}
           rules={[
             {
@@ -187,6 +213,34 @@ export const CornerTypes = () => {
             maxLength={70}
           />
         </Form.Item>
+        <Form.Item
+          style={{width: '300px'}}
+          label={'Вес (г)'}
+          name={'weight'}
+        >
+          <Input
+            type={'number'}
+            placeholder={'Ввведите вес...'}
+            maxLength={70}
+          />
+        </Form.Item>
+        <Form.Item
+          style={{width: '300px'}}
+          label={'Цена (x100)'}
+          name={'price'}
+          rules={[
+            {
+              required: true,
+              message: 'Обязательное поле!',
+            },
+          ]}
+        >
+          <Input
+            placeholder={'Например 1550 = 15.5 BYN'}
+            maxLength={6}
+          />
+        </Form.Item>
+        <SelectInput options={menuCategories} name={'menuCategoryId'} label={'Категория меню'}/>
         <Form.Item>
           <Button type={'primary'} htmlType={'submit'}>
             Добавить
@@ -194,7 +248,7 @@ export const CornerTypes = () => {
         </Form.Item>
       </Form>
       {
-        !isLoading ?
+        !isLoading && menu && menuCategories.length > 0 ?
           <Form form={form} component={false}>
             <Table
               components={{
@@ -209,7 +263,7 @@ export const CornerTypes = () => {
                 onChange: () => setEditingKey(''),
               }}
               dataSource={
-                cornerTypes.map(item => {
+                menu.map(item => {
                   return {
                     ...item,
                     key: item.id,
@@ -218,8 +272,8 @@ export const CornerTypes = () => {
               }
             />
           </Form>
-          : <Loader alert={'Получаем категории кухни'} description={'Подождите немного...'}/>
+          : <Loader alert={'Получаем меню'} description={'Подождите немного...'}/>
       }
-    </ContentWrapper>
-  );
+    </>
+  )
 }

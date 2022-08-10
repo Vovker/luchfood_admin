@@ -25,6 +25,9 @@ export function getEventTypes(): (dispatch: Dispatch) => void {
       const {data} = response;
       if (data) {
         dispatch({type: GET_EVENT_TYPES_SUCCESS, payload: data});
+        if (data.length === 0) {
+          toast('Прежде чем добавить событие, создайте "Категорию событий"', {type: "error"});
+        }
       }
     }, (error) => {
       dispatch({type: GET_EVENT_TYPES_FAILURE, payload: error});

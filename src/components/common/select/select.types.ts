@@ -7,4 +7,5 @@ export type SelectOptions = {
   options: SelectOption[],
   name: string,
   initialValue?: number,
+  label?: string,
 };

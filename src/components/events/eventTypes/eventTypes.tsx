@@ -196,7 +196,7 @@ export const EventTypes = () => {
         </Form.Item>
       </Form>
       {
-        !isLoading && eventTypes.length > 0 ?
+        !isLoading ?
           <Form form={form} component={false}>
             <Table
               components={{

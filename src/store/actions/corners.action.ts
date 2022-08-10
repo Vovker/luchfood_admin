@@ -73,10 +73,13 @@ export function deleteCorner(id: number): (dispatch: Dispatch) => void {
     cornersService.deleteCorner(id).then(response => {
       const {data} = response;
       if (data) {
-        dispatch({type: DELETE_CORNER_SUCCESS, payload: [data]});
+        dispatch({type: DELETE_CORNER_SUCCESS, payload: [{id, data}]});
         toast("Корнер успешно удален", {type: "success"});
       }
     }, (error) => {
+      if(error.response.status === 500) {
+        toast("Невозможно удалить корнер, сначала очистите меню", {type: "error"});
+      }
       dispatch({type: DELETE_CORNER_FAILURE, payload: error});
     });
   }

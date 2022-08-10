@@ -13,6 +13,7 @@ import {Loader} from "../../common/loader/loader";
 import {getBase64} from "../../../utils/getBase64";
 import {CreateCornerTyped} from "../../../store/types/corners.types";
 import {MenuCategories} from "./menuCategories/menuCategories";
+import {Menu} from "./menu/menu";
 
 export const EditCorner = () => {
 
@@ -143,6 +144,7 @@ export const EditCorner = () => {
         ) : <Loader alert={'Событие загружается...'} description={'Подождите немного...'}/>
       }
       <MenuCategories id={Number(id)}/>
+      <Menu id={Number(id)}/>
     </ContentWrapper>
   );
 }

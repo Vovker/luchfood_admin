@@ -26,6 +26,9 @@ export function getCornerTypes(): (dispatch: Dispatch) => void {
       const {data} = response;
       if (data) {
         dispatch({type: GET_CORNER_TYPE_SUCCESS, payload: data});
+        if (data.length === 0) {
+          toast('Прежде чем добавить корнера, добавьте "Категории кухни"', {type: 'error'});
+        }
       }
     }, (error) => {
       dispatch({type: GET_CORNER_TYPE_FAILURE, payload: error});

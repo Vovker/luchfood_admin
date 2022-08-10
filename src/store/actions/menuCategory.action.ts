@@ -71,6 +71,9 @@ export function deleteMenuCategory(id: number): (dispatch: Dispatch) => void {
         toast("Категория успешно удалена", {type: "success"});
       }
     }, (error) => {
+      if(error.response.status === 500) {
+        toast("Невозможно удалить категорию, так как она используется в меню", {type: "error"});
+      }
       dispatch({type: DELETE_MENU_CATEGORY_FAILURE, payload: error});
     });
   }
