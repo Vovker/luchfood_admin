@@ -51,6 +51,7 @@ function App() {
             <Route path={'/corners/types'} element={<CornerTypes/>}/>
             <Route path={'/corners/add'} element={<AddCorner/>}/>
             <Route path={'/corners'} element={<CornersList/>}/>
+            <Route path={'/'} element={<CornersList/>}/>
             <Route path={'/corners/:id'} element={<EditCorner/>}/>
           </Route>
         </Routes>
