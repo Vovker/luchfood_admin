@@ -3,7 +3,8 @@ import moment from "moment";
 export function tokenSession () {
   const now = moment().unix();
   const tokenDate = localStorage.getItem("tokenDate")
-  if(tokenDate === null){
+  const token = localStorage.getItem("token")
+  if(tokenDate === null && token){
     localStorage.setItem("tokenDate", String(now));
     return true;
   }
@@ -12,6 +13,7 @@ export function tokenSession () {
       localStorage.removeItem("token");
       localStorage.removeItem("tokenDate");
       window.location.href = "/login";
+      return false;
     }
   }
 }
