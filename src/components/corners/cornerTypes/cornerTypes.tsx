@@ -1,32 +1,36 @@
 import {ContentWrapper} from "../../common/contentWrapper/contentWrapper";
 import {PageTitle} from "../../common/pageTitle/pageTitle";
-import React, {useLayoutEffect, useState} from "react";
-import {Popconfirm, Form, Table, Input, Button, Row} from "antd";
 import {useAppDispatch} from "../../../hooks/useAppDispatch";
+import React, {useLayoutEffect, useState} from "react";
 import {
-  createEventType,
-  deleteEventType,
-  getEventTypes,
-  updateEventType
-} from "../../../store/actions/eventTypes.action";
+  createCornerType,
+  deleteCornerType,
+  getCornerTypes,
+  updateCornerType
+} from "../../../store/actions/cornerTypes.action";
 import {useAppSelector} from "../../../hooks/useAppSelector";
+import {Button, Form, Input, Popconfirm, Row, Table} from "antd";
 import {Loader} from "../../common/loader/loader";
-import {EditableEventTypes} from "./eventTypes.types";
+import {EditableCornerTypes} from "./cornerTypes.types";
 
-export const EventTypes = () => {
+export const CornerTypes = () => {
 
   const dispatch = useAppDispatch();
 
   useLayoutEffect(() => {
-    dispatch(getEventTypes())
+    dispatch(getCornerTypes());
   }, [dispatch]);
 
-  const {eventTypes, isLoading} = useAppSelector(state => state.eventTypes)
+  const {cornerTypes, isLoading} = useAppSelector(state => state.cornerTypes);
+
+  const onFinish = (values: any) => {
+    dispatch(createCornerType({name: values.name}))
+  }
 
   const [editingKey, setEditingKey] = useState('');
 
   const handleDelete = (id: number) => {
-    dispatch(deleteEventType(id));
+    dispatch(deleteCornerType(id));
   }
 
   const [form] = Form.useForm();
@@ -45,14 +49,14 @@ export const EventTypes = () => {
   const save = async (key: number) => {
     try {
       const row = await form.validateFields();
-      dispatch(updateEventType(key, row));
+      dispatch(updateCornerType(key, row));
       setEditingKey('');
     } catch (errInfo) {
       console.log('Validate Failed:', errInfo);
     }
   };
 
-  const EditableCell: React.FC<EditableEventTypes> = ({
+  const EditableCell: React.FC<EditableCornerTypes> = ({
     editing,
     dataIndex,
     title,
@@ -158,15 +162,9 @@ export const EventTypes = () => {
     };
   });
 
-  //ADD NEW EVENT TYPE
-
-  const onFinish = (values: any) => {
-    dispatch(createEventType(values))
-  }
-
   return(
     <ContentWrapper>
-      <PageTitle>Типы событий</PageTitle>
+      <PageTitle>Категории кухни</PageTitle>
       <Form
         style={{display: 'flex', gap: '40px', alignItems: 'flex-end'}}
         size={'large'}
@@ -211,7 +209,7 @@ export const EventTypes = () => {
                 onChange: () => setEditingKey(''),
               }}
               dataSource={
-                eventTypes.map(item => {
+                cornerTypes.map(item => {
                   return {
                     ...item,
                     key: item.id,
@@ -220,7 +218,7 @@ export const EventTypes = () => {
               }
             />
           </Form>
-          : <Loader alert={'Получаем типы событий'} description={'Подождите немного...'}/>
+          : <Loader alert={'Получаем категории кухни'} description={'Подождите немного...'}/>
       }
     </ContentWrapper>
   );

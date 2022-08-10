@@ -3,6 +3,10 @@ import {newsByIdReducer, newsReducer} from "./reducers/news.reducer";
 import {galleryByIdReducer, galleryReducer} from "./reducers/gallery.reducer";
 import {eventTypesReducer} from "./reducers/eventTypes.reducer";
 import {eventByIdReducer, eventsReducer} from "./reducers/events.reducer";
+import {cornerTypesReducer} from "./reducers/cornerTypes.reducer";
+import {cornerByIdReducer, cornerReducer} from "./reducers/corner.reducer";
+import {menuCategoryReducer} from "./reducers/menuCategory.reducer";
+import {menuReducer} from "./reducers/menu.reducer";
 
 const rootReducer = combineReducers({
   news: newsReducer,
@@ -12,6 +16,11 @@ const rootReducer = combineReducers({
   eventTypes: eventTypesReducer,
   events: eventsReducer,
   eventsById: eventByIdReducer,
+  cornerTypes: cornerTypesReducer,
+  corners: cornerReducer,
+  cornersById: cornerByIdReducer,
+  menuCategories: menuCategoryReducer,
+  menu: menuReducer
 });
 
 export const store = configureStore({

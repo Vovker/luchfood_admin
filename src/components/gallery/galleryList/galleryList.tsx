@@ -72,7 +72,7 @@ export const GalleryList = () => {
     <ContentWrapper>
       <PageTitle>Все фотографии</PageTitle>
       {
-        !isLoading && gallery.length > 0 ?
+        !isLoading ?
           <Table
             columns={columns}
             dataSource={

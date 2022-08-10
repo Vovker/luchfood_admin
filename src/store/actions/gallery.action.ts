@@ -23,6 +23,9 @@ export function getGallery(amount: number, pageNumber: number): (dispatch: Dispa
       const {data} = response;
       if (data) {
         dispatch({type: GET_GALLERY_SUCCESS, payload: data});
+        if (data.length === 0) {
+          toast("Нет ни одной фотографии", {type: "error"});
+        }
       }
     }, (error) => {
       dispatch({type: GET_GALLERY_FAILURE, payload: error});

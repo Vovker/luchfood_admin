@@ -1,32 +1,35 @@
-import {ContentWrapper} from "../../common/contentWrapper/contentWrapper";
-import {PageTitle} from "../../common/pageTitle/pageTitle";
+import {PageTitle} from "../../../common/pageTitle/pageTitle";
+import {useAppDispatch} from "../../../../hooks/useAppDispatch";
 import React, {useLayoutEffect, useState} from "react";
-import {Popconfirm, Form, Table, Input, Button, Row} from "antd";
-import {useAppDispatch} from "../../../hooks/useAppDispatch";
 import {
-  createEventType,
-  deleteEventType,
-  getEventTypes,
-  updateEventType
-} from "../../../store/actions/eventTypes.action";
-import {useAppSelector} from "../../../hooks/useAppSelector";
-import {Loader} from "../../common/loader/loader";
-import {EditableEventTypes} from "./eventTypes.types";
+  createMenuCategory,
+  deleteMenuCategory,
+  getMenuCategories,
+  updateMenuCategory
+} from "../../../../store/actions/menuCategory.action";
+import {useAppSelector} from "../../../../hooks/useAppSelector";
+import {Button, Form, Input, Popconfirm, Row, Table} from "antd";
+import {EditableMenuCategoryTypes} from "./menuCategories.types";
+import {Loader} from "../../../common/loader/loader";
 
-export const EventTypes = () => {
+export const MenuCategories: React.FC<{id: number}> = ({id}) => {
 
   const dispatch = useAppDispatch();
 
   useLayoutEffect(() => {
-    dispatch(getEventTypes())
-  }, [dispatch]);
+    dispatch(getMenuCategories(id));
+  }, [dispatch, id])
 
-  const {eventTypes, isLoading} = useAppSelector(state => state.eventTypes)
+  const {menuCategories, isLoading} = useAppSelector(state => state.menuCategories);
+
+  const onFinish = (values: any) => {
+    dispatch(createMenuCategory({name: values.name, cornerId: id}))
+  }
 
   const [editingKey, setEditingKey] = useState('');
 
   const handleDelete = (id: number) => {
-    dispatch(deleteEventType(id));
+    dispatch(deleteMenuCategory(id));
   }
 
   const [form] = Form.useForm();
@@ -45,22 +48,22 @@ export const EventTypes = () => {
   const save = async (key: number) => {
     try {
       const row = await form.validateFields();
-      dispatch(updateEventType(key, row));
+      dispatch(updateMenuCategory(key, row));
       setEditingKey('');
     } catch (errInfo) {
       console.log('Validate Failed:', errInfo);
     }
   };
 
-  const EditableCell: React.FC<EditableEventTypes> = ({
-    editing,
-    dataIndex,
-    title,
-    record,
-    index,
-    children,
-    ...restProps
-  }) => {
+  const EditableCell: React.FC<EditableMenuCategoryTypes> = ({
+     editing,
+     dataIndex,
+     title,
+     record,
+     index,
+     children,
+     ...restProps
+   }) => {
     const inputNode = <Input/>;
     return (
       <td {...restProps}>
@@ -158,15 +161,9 @@ export const EventTypes = () => {
     };
   });
 
-  //ADD NEW EVENT TYPE
-
-  const onFinish = (values: any) => {
-    dispatch(createEventType(values))
-  }
-
   return(
-    <ContentWrapper>
-      <PageTitle>Типы событий</PageTitle>
+    <>
+      <PageTitle>Категории меню</PageTitle>
       <Form
         style={{display: 'flex', gap: '40px', alignItems: 'flex-end'}}
         size={'large'}
@@ -196,7 +193,7 @@ export const EventTypes = () => {
         </Form.Item>
       </Form>
       {
-        !isLoading ?
+        !isLoading && menuCategories ?
           <Form form={form} component={false}>
             <Table
               components={{
@@ -211,7 +208,7 @@ export const EventTypes = () => {
                 onChange: () => setEditingKey(''),
               }}
               dataSource={
-                eventTypes.map(item => {
+                menuCategories.map(item => {
                   return {
                     ...item,
                     key: item.id,
@@ -220,8 +217,8 @@ export const EventTypes = () => {
               }
             />
           </Form>
-          : <Loader alert={'Получаем типы событий'} description={'Подождите немного...'}/>
+          : <Loader alert={'Получаем категории меню'} description={'Подождите немного...'}/>
       }
-    </ContentWrapper>
-  );
+    </>
+  )
 }

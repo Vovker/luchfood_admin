@@ -2,12 +2,17 @@ import EventTypesService from "../services/eventTypes.service";
 import {Dispatch} from "@reduxjs/toolkit";
 import {
   CREATE_EVENT_TYPES_FAILURE,
-  CREATE_EVENT_TYPES_REQUEST, CREATE_EVENT_TYPES_SUCCESS,
+  CREATE_EVENT_TYPES_REQUEST,
+  CREATE_EVENT_TYPES_SUCCESS,
   DELETE_EVENT_TYPES_FAILURE,
-  DELETE_EVENT_TYPES_REQUEST, DELETE_EVENT_TYPES_SUCCESS,
+  DELETE_EVENT_TYPES_REQUEST,
+  DELETE_EVENT_TYPES_SUCCESS,
   GET_EVENT_TYPES_FAILURE,
   GET_EVENT_TYPES_REQUEST,
-  GET_EVENT_TYPES_SUCCESS, UPDATE_EVENT_TYPES_FAILURE, UPDATE_EVENT_TYPES_REQUEST, UPDATE_EVENT_TYPES_SUCCESS
+  GET_EVENT_TYPES_SUCCESS,
+  UPDATE_EVENT_TYPES_FAILURE,
+  UPDATE_EVENT_TYPES_REQUEST,
+  UPDATE_EVENT_TYPES_SUCCESS
 } from "../types/eventTypes.types";
 import {toast} from "react-toastify";
 
@@ -20,6 +25,9 @@ export function getEventTypes(): (dispatch: Dispatch) => void {
       const {data} = response;
       if (data) {
         dispatch({type: GET_EVENT_TYPES_SUCCESS, payload: data});
+        if (data.length === 0) {
+          toast('Прежде чем добавить событие, создайте "Категорию событий"', {type: "error"});
+        }
       }
     }, (error) => {
       dispatch({type: GET_EVENT_TYPES_FAILURE, payload: error});
