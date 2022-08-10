@@ -3,10 +3,13 @@ import SideMenu from "../sideMenu/sideMenu";
 import React from "react";
 import {Outlet, useNavigate} from "react-router-dom";
 import logo from '../../assets/logo.svg'
+import {tokenSession} from "../../utils/tokenSession";
 
 const Wrapper: React.FC<{token: string | null}> = ({token}) => {
 
   const navigate = useNavigate();
+
+  tokenSession();
 
   if(!token) {
     navigate('/login', {replace: true})
