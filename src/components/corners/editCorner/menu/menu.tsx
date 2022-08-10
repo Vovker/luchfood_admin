@@ -56,7 +56,11 @@ export const Menu: React.FC<{ id: number }> = ({id}) => {
   const save = async (key: number) => {
     try {
       const row = await form.validateFields();
-      dispatch(updateMenu(key, row));
+      dispatch(updateMenu(key, {
+        name: row.name,
+        weight: row.weight ? row.weight : null,
+        price: row.price
+      }));
       setEditingKey('');
     } catch (errInfo) {
       console.log('Validate Failed:', errInfo);
@@ -83,7 +87,7 @@ export const Menu: React.FC<{ id: number }> = ({id}) => {
             }}
             rules={[
               {
-                required: true,
+                required: dataIndex !== 'weight',
                 message: `Введите ${title}!`,
               },
             ]}
