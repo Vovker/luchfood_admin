@@ -65,7 +65,7 @@ export const CornersList = () => {
       render: (record: any) => (
         <Row style={{gap: '20px'}}>
           <Popconfirm
-            title={'Удалить событие?'}
+            title={'Удалить корнер?'}
             onConfirm={() => handleDelete(record.key)}
           >
             <Button type="primary" danger ghost>

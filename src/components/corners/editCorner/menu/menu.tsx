@@ -213,7 +213,7 @@ export const Menu: React.FC<{ id: number }> = ({id}) => {
           ]}
         >
           <Input
-            placeholder={'Ввведите название...'}
+            placeholder={'Введите название...'}
             maxLength={70}
           />
         </Form.Item>
@@ -224,7 +224,7 @@ export const Menu: React.FC<{ id: number }> = ({id}) => {
         >
           <Input
             type={'number'}
-            placeholder={'Ввведите вес...'}
+            placeholder={'Введите вес...'}
             maxLength={70}
           />
         </Form.Item>

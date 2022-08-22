@@ -63,7 +63,7 @@ export const AddEvent = () => {
               ]}
             >
               <Input
-                placeholder={'Ввведите название...'}
+                placeholder={'Введите название...'}
                 maxLength={70}
               />
             </Form.Item>
@@ -98,7 +98,7 @@ export const AddEvent = () => {
                 },
               ]}
             >
-              <DatePicker/>
+              <DatePicker style={{width: 200}}/>
             </Form.Item>
             <Form.Item
               label={'Планируемый старт события'}
@@ -110,12 +110,12 @@ export const AddEvent = () => {
                 },
               ]}
             >
-              <TimePicker/>
+              <TimePicker style={{width: 200}}/>
             </Form.Item>
             <Form.Item
               label={'Изображение'}
             >
-              <DragAndDrop name={'img'}/>
+              <DragAndDrop name={'img'} required/>
             </Form.Item>
             <Form.Item>
               <Button type={'primary'} htmlType={'submit'}>

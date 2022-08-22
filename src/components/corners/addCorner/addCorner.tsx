@@ -40,7 +40,7 @@ export const AddCorner = () => {
 
   return(
     <ContentWrapper>
-      <PageTitle>Добавить корнера</PageTitle>
+      <PageTitle>Добавить корнер</PageTitle>
       {
         !isLoading && cornerTypes.length > 0  ?
           <Form
@@ -65,7 +65,7 @@ export const AddCorner = () => {
               ]}
             >
               <Input
-                placeholder={'Ввведите название...'}
+                placeholder={'Введите название...'}
                 maxLength={70}
               />
             </Form.Item>
