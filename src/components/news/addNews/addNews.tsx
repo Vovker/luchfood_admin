@@ -48,7 +48,7 @@ export const AddNews = () => {
           ]}
         >
           <Input
-            placeholder={'Ввведите название...'}
+            placeholder={'Введите название...'}
             maxLength={70}
           />
         </Form.Item>

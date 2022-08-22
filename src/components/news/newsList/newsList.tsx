@@ -55,7 +55,7 @@ export const NewsList = () => {
       render: (record: any) => (
         <Row justify={'space-between'}>
           <Popconfirm
-            title={'Удалить новость?'}
+            title={'Удалить фото?'}
             onConfirm={() => handleDelete(record.key)}
           >
             <Button type="primary" danger ghost>

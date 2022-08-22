@@ -73,7 +73,7 @@ export const EditCorner = () => {
               ]}
             >
               <Input
-                placeholder={'Ввведите название...'}
+                placeholder={'Введите название...'}
                 maxLength={70}
               />
             </Form.Item>
@@ -121,7 +121,7 @@ export const EditCorner = () => {
               ]}
             >
               <Input
-                placeholder={'Ввведите адрес...'}
+                placeholder={'Введите адрес...'}
                 maxLength={50}
               />
             </Form.Item>

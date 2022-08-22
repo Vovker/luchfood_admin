@@ -6,7 +6,7 @@ const { Sider} = Layout;
 
 const SideMenu = () => {
   return (
-    <Sider>
+    <Sider width={260}>
       <Menu
         theme={'dark'}
         mode="inline"
@@ -41,7 +41,7 @@ const SideMenu = () => {
               },
               {
                 key: 23,
-                label: <Link to={"/corners/add"}>Добавить корнера</Link>
+                label: <Link to={"/corners/add"}>Добавить корнер</Link>
               },
             ]
           },
